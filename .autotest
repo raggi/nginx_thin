@@ -1,0 +1,54 @@
+# -*- ruby -*-
+
+require 'autotest/restart'
+
+module Glob2Rexp
+  GLOB2REXP = {
+    '.' => '\.',
+    /(?:^|[^\\])\*/ => '\1.*'
+  }
+
+  def self.call(pattern)
+    GLOB2REXP.each { |from, to| pattern.gsub!(from, to) }
+    Regexp.new(pattern)
+  end
+end
+
+Autotest.add_hook :initialize do |at|
+  at.testlib = 'minitest/autorun'
+  
+  # Don't track extras, this just burns cpu.
+  ignores = %w[]
+  ignores.concat File.read('.gitignore').split
+  ignores.delete_if { |pattern| pattern.nil? || pattern.empty? }
+  ignores.map! { |pattern| Glob2Rexp.call pattern }
+  ignores.each do |ignore|
+    at.add_exception ignore
+  end
+  
+  # Make sure that we run all tests if the helper changes:
+  at.add_mapping(%r%^test/helper\.rb$%) do |f, _|
+    at.files_matching %r%test_.*\.rb%
+  end
+  
+  # If the gemspec changes, we need to run the tests
+  at.add_mapping(%r%^.*\.gemspec$%) do |f, _|
+    at.files_matching %r%test_.*\.rb%
+  end
+  
+  # If bundle did something, run all tests again
+  at.add_mapping(%r%^Gemfile\.lock$%) do |f, _|
+    at.files_matching %r%test_.*\.rb%
+  end
+end
+
+if File.exists?('Gemfile')
+  require 'autotest/bundler'
+
+  # If the Gemfile gets updated, run bundle install
+  Autotest.add_hook :updated do |at, *args|
+    if args.flatten.grep(%r%^Gemfile$|^.*\.gemspec$%).any?
+      system 'bundle'
+    end
+  end
+end

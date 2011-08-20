@@ -1,0 +1,14 @@
+.autotest
+.gemtest
+CHANGELOG.rdoc
+Manifest.txt
+README.rdoc
+Rakefile
+bin/nginx_thin
+config.ru
+lib/nginx_thin.rb
+lib/nginx_thin/nginx_server.rb
+lib/nginx_thin/thin_server.rb
+test/gemloader.rb
+test/helper.rb
+test/test_nginx_thin.rb

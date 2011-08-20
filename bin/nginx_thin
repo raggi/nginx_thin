@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+config = ARGV.shift || ('config.ru' if File.exists?('config.ru'))
+port = ARGV.shift || 0
+root = ARGV.shift || Dir.pwd
+
+unless config && File.exists?(config) && File.directory?(root)
+  abort "Usage: nginx_thin config.ru [port] [root_path]"
+end
+
+require 'nginx_thin'
+
+app, opts = Rack::Builder.parse_file(config)
+
+server = NginxThin.new app, port, root
+server.start
+puts server.url
+puts "kill -INT #{$$} or CTRL+C to quit"
+puts "kill -HUP #{$$} to restart"
+trap(:INT) { server.stop }
+trap(:HUP) { server.stop; server.start }
+system "open #{server.url}"
+sleep

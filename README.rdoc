@@ -1,0 +1,62 @@
+= nginx_thin
+
+http://rubygems.org/gems/nginx_thin
+{Project}[http://rubygems.org/gems/nginx_thin]
+{Documentation}[http://libraggi.rubyforge.org/nginx_thin/README_rdoc.html]
+{Wiki}[http://wiki.github.com/raggi/nginx_thin/]
+{Source Code}[http://github.com/raggi/nginx_thin/]
+{Issues}[http://github.com/raggi/nginx_thin/issues]
+{Rubyforge}[http://rubyforge.org/projects/libraggi]
+
+== DESCRIPTION:
+
+A wrapper around Thin and Nginx to support easily booting them together. This
+is most useful for integration test suites when you want to test through your
+nginx configuration. In some cases it may also provide a performance boost for
+such integration tests.
+
+== FEATURES/PROBLEMS:
+
+* Capybara integration (just call NginxThin.capybara in your setup)
+
+== SYNOPSIS:
+
+For easy Capybara integration:
+
+  NginxThin.capybara
+
+For other uses, see the documentation on NginxThin.
+
+== REQUIREMENTS:
+
+* nginx
+* thin
+
+== INSTALL:
+
+* gem install nginx_thin
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) 2011 raggi
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
